@@ -30,7 +30,6 @@ def backtrack(
         current.pop()
 
 def print_all_state(total_list: Result) -> None:
-    print(len(total_list))
     for i in total_list:
         print(*i)
 
