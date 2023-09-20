@@ -17,25 +17,30 @@ func BFS(graph *Graph, vertice int) []int {
 	visited := map[int]bool{}
 
 	queue := []int{vertice}
-	routes := []int{vertice}
+	routes := []int{}
 
 	for len(queue) > 0 {
 		v := queue[0]
 		queue = queue[1:] // queue pop
 
+		if _, ok := visited[v]; ok {
+			continue
+		}
+
+		// DO visit: mark & routes
 		visited[v] = true
+		routes = append(routes, v) // append to routes
 
 		if adjs, ok := graph.GetAdjacent(v); ok {
 			// sort, make sure routes consistent for unit test
 			sort.Ints(adjs)
 
 			for _, adj := range adjs {
+				// only unvisited node will be append
 				if _, ok := visited[adj]; ok {
 					continue
 				}
 
-				visited[adj] = true
-				routes = append(routes, adj) // append to routes
 				queue = append(queue, adj)
 			}
 		}
