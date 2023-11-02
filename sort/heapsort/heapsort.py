@@ -36,6 +36,7 @@ def heapsort(src: Vector) -> Vector:
 
     # 2. move header node to the tail and re-heapify the next.
     for i in range(size-1, -1, -1):
+        # pop header node, and reconstruct a max-heap from the remaining array
         src[0], src[i] = src[i], src[0]
         max_heapify(src, 0, i)
 

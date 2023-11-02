@@ -50,6 +50,7 @@ class TokenParser:
         if ch == ')':
             return left, Token(TokenType.RB, '')
 
+        # skip all the characters until the next left bracket
         return cls.next_token(left)
 
 
