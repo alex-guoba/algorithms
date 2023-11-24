@@ -42,7 +42,8 @@ func (uf *UnionFind) Connected(p, q int) bool {
 		return false
 	}
 
-	return uf.id[p] == uf.id[q]
+	return uf.Find(p) == uf.Find(q)
+	// return uf.id[p] == uf.id[q]
 }
 
 func (uf *UnionFind) Find(v int) int {

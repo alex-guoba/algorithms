@@ -39,15 +39,14 @@ func TestUnionFind_Connected(t *testing.T) {
 	type fields struct {
 		count int
 	}
-	type args struct {
+	type arg struct {
 		p int
 		q int
 	}
 	tests := []struct {
 		name   string
 		fields fields
-		args   args
-		want   bool
+		ags    []arg
 	}{
 		// TODO: Add test cases.
 		{
@@ -55,19 +54,21 @@ func TestUnionFind_Connected(t *testing.T) {
 			fields{
 				4,
 			},
-			args{
-				0,
-				1,
-			},
-			false,
+			[]arg{arg{0, 1}, arg{1, 2}},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			uf := New(tt.fields.count)
 
-			if got := uf.Connected(tt.args.p, tt.args.q); got != tt.want {
-				t.Errorf("UnionFind.Connected() = %v, want %v", got, tt.want)
+			for _, a := range tt.ags {
+				if got := uf.Connected(a.p, a.q); got != false {
+					t.Errorf("UnionFind.Connected() error")
+				}
+				uf.Union(a.p, a.q)
+				if got := uf.Connected(a.p, a.q); got != true {
+					t.Errorf("UnionFind.Connected() failed")
+				}
 			}
 		})
 	}
@@ -142,6 +143,8 @@ func TestUnionFind_Depth(t *testing.T) {
 	assert.Equal(t, uf.Depth(1, 1), 2, "depth error")
 	assert.Equal(t, uf.Depth(0, 1), 3, "depth error")
 	assert.Equal(t, uf.Depth(4, 1), 2, "depth error")
+
+	assert.Equal(t, uf.Connected(0, 4), true, "connected error")
 }
 
 func TestUnionFind_Union(t *testing.T) {
